@@ -1,0 +1,36 @@
+html, body {
+    position: relative;
+    height: 100%;
+}
+body {
+    background: #eee;
+    margin: 0;
+    padding: 0;
+}
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    width: 70%;
+    background: #fff;
+}
+#bracket {
+    position: absolute;
+    width: 100%;
+}
+
+/* Toornament modification */
+.match.format-row {
+    min-width: 0;
+    padding: 0 0.75rem;
+}
+.match.format-row>.result {
+    flex: 3;
+}
+.opponents, .result {
+    height: 80%;
+}
+.match.format-row .opponent {
+    align-items: center;
+}
