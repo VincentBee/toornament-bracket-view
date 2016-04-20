@@ -1,0 +1,33 @@
+<div class="match format-box">
+    {{#match_name}}
+    <div class="title">
+        {{#match_logo}}
+        <div class="discipline format-icon size-small">
+            <img src="{{ match_logo }}">
+        </div>
+        {{/match_logo}}
+        <div class="name">{{ match_name }}</div>
+    </div>
+    {{/match_name}}
+    <div class="primary">
+        <div class="record">
+            <div class="opponent opponent-1">
+                <div class="country"><i class="flag-16 flag-us"></i></div>
+                <div class="name">{{ opponent1_name }}</div>
+                <div class="result loss">Loss</div>
+            </div>
+            <div class="opponent opponent-2">
+                <div class="country"><i class="flag-16 flag-de"></i></div>
+                <div class="name">{{ opponent2_name }}</div>
+                <div class="result win">Win</div>
+            </div>
+        </div>
+    </div>
+    <div class="secondary icon-layout">
+        <div class="date">15/01/2016</div>
+        <div class="icons">
+            <span class="disabled"><i class="fa-video-camera"></i></span>
+            <span><i class="fa-bar-chart"></i></span>
+        </div>
+    </div>
+</div>

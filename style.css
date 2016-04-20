@@ -13,7 +13,12 @@ body {
 }
 .swiper-slide {
     width: 70%;
-    background: #fff;
+    min-width: 20rem;
+}
+.match-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #bracket {
     position: absolute;
@@ -21,16 +26,7 @@ body {
 }
 
 /* Toornament modification */
-.match.format-row {
+.match .format-box {
     min-width: 0;
-    padding: 0 0.75rem;
-}
-.match.format-row>.result {
-    flex: 3;
-}
-.opponents, .result {
-    height: 80%;
-}
-.match.format-row .opponent {
-    align-items: center;
+    margin: 0;
 }
