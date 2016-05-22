@@ -19,6 +19,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: height 1s;
+    -moz-transition: height 1s;
+    -webkit-transition: height 1s;
+    -o-transition: height 1s;
 }
 #bracket {
     position: absolute;
@@ -29,4 +33,14 @@ body {
 .match .format-box {
     min-width: 0;
     margin: 0;
+}
+
+.size-small .match.format-box .title,
+.size-small .match.format-box .secondary,
+.size-small .match.format-box .opponent .result {
+    display: none;
+}
+
+.size-small .match.format-box .record {
+    flex-direction: row;
 }

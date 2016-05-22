@@ -7,6 +7,23 @@ document.addEventListener('DOMContentLoaded', function () {
         html = document.documentElement,
         screenHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
 
+    var resetMatchClasses = function(swiper) {
+        var matches = document.getElementsByClassName('match-container');
+        for (var i = 0; i < matches.length; i++) {
+            matches[i].classList.remove('size-small');
+        }
+    };
+
+    var addMatchClasses = function(swiper) {
+        var activeIndex = swiper.activeIndex;
+        for (var i=0; i<activeIndex; i++) {
+            var matches  = swiper.slides[i].getElementsByClassName('match-container');
+            for (var j=0; j<matches.length; j++) {
+                matches[j].classList.add('size-small');
+            }
+        }
+    };
+
     var updateMatchHeight = function(swiper) {
         var progress = swiper.progress * (swiper.slides.length-1);
         for (var i=0; i<swiper.slides.length; i++) {
@@ -15,37 +32,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 matches[j].style.height = (height * Math.pow(2, i-progress)) + "px";
             }
         }
-    };
 
-    var updateTop = function(touch) {
-        console.log(screenHeight, bracket.offsetHeight);
-        // var top = 0;
-        // if (bracket.offsetHeight < screenHeight) {
-            var top = screenHeight/2 - bracket.offsetHeight/2;
-        // } else {
-            // top = (touch.clientY * bracket.offsetHeight / screenHeight) - touch.clientY;
-            // if (top > 0) {
-            //     top = 0;
-            // }
-            // if (top < -screenHeight) {
-            //     top = -screenHeight;
-            // }
-        // }
-
-        bracket.style.top = top + 'px';
+        resetMatchClasses(swiper);
+        addMatchClasses(swiper);
     };
 
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
         centeredSlides: true,
         spaceBetween: 10,
-
-        onSliderMove: function (swiper, event) {
-            // updateTop(event.touches[0]);
-        },
-        onProgress: function(swiper) {
-            updateMatchHeight(swiper);
-        }
+        onInit: updateMatchHeight,
+        onSlideChangeEnd: updateMatchHeight
     });
 
     get('views/match.html', function (template) {
