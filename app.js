@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var height = 118,
+    var height = 90,
         bracket = document.getElementById('bracket'),
         body = document.body,
         html = document.documentElement,

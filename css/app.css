@@ -1,0 +1,46 @@
+/**
+ * Tournament bracket view
+ */
+#bracket {
+  position: absolute;
+  width: 100%; }
+
+.swiper-container {
+  width: 100%;
+  height: 100%; }
+
+.swiper-slide {
+  width: 70%; }
+
+.match-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 1s;
+  -moz-transition: height 1s;
+  -webkit-transition: height 1s;
+  -o-transition: height 1s; }
+
+.size-small .match.format-mini {
+  display: none; }
+
+.match.format-looser {
+  display: none;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid #dadada;
+  background: #e6e6e6;
+  color: #b3b3b3;
+  width: 100%;
+  padding: 0.25rem; }
+  .size-small .match.format-looser {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; }
+  .match.format-looser > * {
+    margin-right: 0.25rem; }
+    .match.format-looser > *:last-child {
+      margin-right: 0; }
+
+/*# sourceMappingURL=app.css.map */
