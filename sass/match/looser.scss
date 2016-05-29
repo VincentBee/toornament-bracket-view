@@ -1,2 +1,5 @@
 @mixin match-format-looser() {
+  background:   $color-disabled;
+  color:        $primary-400;
+  text-align:   right;
 }

@@ -3,7 +3,8 @@
  */
 body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  background: #263238; }
 
 .swiper-container {
   width: 100%;
@@ -39,18 +40,23 @@ body {
     height: 24rem; }
 
 .match {
-  border: 1px solid #e6e6e6;
+  background: #607D8B;
   padding: 0.5rem 1rem;
   width: 100%;
-  -webkit-border-radius: 0.25rem;
-  -moz-border-radius: 0.25rem;
-  border-radius: 0.25rem; }
-  .swiper-slide-prev .match.format-looser {
-    display: block; }
-  .swiper-slide-active .match.format-looser {
-    display: none; }
-  .swiper-slide-next .match.format-looser {
-    display: none; }
+  color: #ECEFF1;
+  font-family: "Arial"; }
+  .match:hover, .match:active, .match:focus {
+    background: #78909C; }
+  .match.format-looser {
+    background: #455A64;
+    color: #78909C;
+    text-align: right; }
+    .swiper-slide-prev .match.format-looser {
+      display: block; }
+    .swiper-slide-active .match.format-looser {
+      display: none; }
+    .swiper-slide-next .match.format-looser {
+      display: none; }
   .swiper-slide-prev .match.format-versus {
     display: none; }
   .swiper-slide-active .match.format-versus {
@@ -61,6 +67,8 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 0.25rem; }
+    .match.format-versus .side .opponent {
+      font-weight: bold; }
   .swiper-slide-prev .match.format-upcoming {
     display: none; }
   .swiper-slide-active .match.format-upcoming {
@@ -69,23 +77,17 @@ body {
     display: block; }
 
 .bracket-line {
-  height: 100%; }
-  .swiper-slide:not(.swiper-slide-active) .bracket-line {
-    display: none; }
+  height: 100%;
+  width: 4rem; }
   .swiper-slide:first-child .bracket-line {
     display: none; }
+  .swiper-slide-active .bracket-line {
+    width: 2rem; }
+    .swiper-slide-active .bracket-line polyline {
+      stroke-width: 0.5; }
   .bracket-line polyline {
     fill: none;
-    stroke: #e6e6e6;
-    stroke-width: 0.5; }
-
-.bracket-line-2 {
-  height: 100%; }
-  .swiper-slide:not(.swiper-slide-next) .bracket-line-2 {
-    display: none; }
-  .bracket-line-2 polyline {
-    fill: none;
-    stroke: #e6e6e6;
-    stroke-width: 0.5; }
+    stroke: #607D8B;
+    stroke-width: 0.25; }
 
 /*# sourceMappingURL=app.css.map */

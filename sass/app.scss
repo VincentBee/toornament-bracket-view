@@ -8,6 +8,7 @@
 body {
   margin:     0;
   padding:    0;
+  background: $color-back;
 }
 
 .swiper-container {
@@ -94,32 +95,24 @@ body {
 }
 
 .bracket-line {
-  .swiper-slide:not(.swiper-slide-active) & {
-    display: none;
-  }
   .swiper-slide:first-child & {
     display: none;
   }
 
   height:           100%;
+  width:            4rem;
+
+  .swiper-slide-active & {
+    width: 2rem;
+
+    polyline {
+      stroke-width:   0.5;
+    }
+  }
 
   polyline {
     fill:           none;
-    stroke:         #e6e6e6;
-    stroke-width:   0.5;
-  }
-}
-
-.bracket-line-2 {
-  .swiper-slide:not(.swiper-slide-next) & {
-    display: none;
-  }
-
-  height:           100%;
-
-  polyline {
-    fill:           none;
-    stroke:         #e6e6e6;
-    stroke-width:   0.5;
+    stroke:         $color-main;
+    stroke-width:   0.25;
   }
 }

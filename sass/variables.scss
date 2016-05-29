@@ -1,3 +1,29 @@
 $match-container-height: 6rem;
 
-$gray:      #e6e6e6;
+$primary-50:  #ECEFF1;
+$primary-100: #CFD8DC;
+$primary-200: #B0BEC5;
+$primary-300: #90A4AE;
+$primary-400: #78909C;
+$primary-500: #607D8B;
+$primary-600: #546E7A;
+$primary-700: #455A64;
+$primary-800: #37474F;
+$primary-900: #263238;
+
+$secondary-50: #FFF3E0;
+$secondary-100: #FFE0B2;
+$secondary-200: #FFCC80;
+$secondary-300: #FFB74D;
+$secondary-400: #FFA726;
+$secondary-500: #FF9800;
+$secondary-600: #FB8C00;
+$secondary-700: #F57C00;
+$secondary-800: #EF6C00;
+$secondary-900: #E65100;
+
+$color-back:     $primary-900;
+$color-main:     $primary-500;
+$color-focus:    $primary-400;
+$color-disabled: $primary-700;
+$color-content:  $primary-50;
