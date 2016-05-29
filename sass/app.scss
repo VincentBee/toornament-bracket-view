@@ -1,9 +1,11 @@
+@import "variables";
+
 /**
  * Tournament bracket view
  */
-#bracket {
-  position: absolute;
-  width: 100%;
+body {
+  margin:     0;
+  padding:    0;
 }
 
 .swiper-container {
@@ -13,47 +15,70 @@
 
 .swiper-slide {
   width:      70%;
-//  min-width:  20rem;
 }
 
 .match-container {
+  /* Center the content */
   display: flex;
-  justify-content: center;
   align-items: center;
+  .swiper-slide-prev & {
+    justify-content: flex-end;
+  }
+  .swiper-slide-active & {
+    justify-content: center;
+  }
+  .swiper-slide-next & {
+    justify-content: flex-start;
+  }
 
+  /* Height management for n-2, n-1, n, n+1 and n+2 slides */
+  height:                                         $match-container-height/4;
+  .swiper-slide-prev & {                  height: $match-container-height/2; }
+  .swiper-slide-active & {                height: $match-container-height; }
+  .swiper-slide-next & {                  height: $match-container-height*2; }
+  .swiper-slide-next + .swiper-slide & {  height: $match-container-height*4; }
+
+  /* Height transition */
   transition: height 1s;
   -moz-transition: height 1s;
   -webkit-transition: height 1s;
   -o-transition: height 1s;
 }
 
-.match.format-mini {
-  .size-small & {
-    display: none;
-  }
-}
+.match {
+  background: #E6E6E6;
 
-.match.format-looser {
-  display: none;
-  .size-small & {
-    display:          flex;
-    align-items:      center;
-    justify-content:  flex-end;
-  }
-  > * {
-    margin-right: 0.25rem;
-    &:last-child {
-      margin-right: 0;
+  &.format-looser {
+    .swiper-slide-prev & {
+      display: block;
+    }
+    .swiper-slide-active & {
+      display: none;
+    }
+    .swiper-slide-next & {
+      display: none;
     }
   }
-
-  -webkit-border-radius:  0.25rem;
-  -moz-border-radius:     0.25rem;
-  border-radius:          0.25rem;
-
-  border:           1px solid #dadada;
-  background:       #e6e6e6;
-  color:            #b3b3b3;
-  width:            100%;
-  padding:          0.25rem;
+  &.format-versus {
+    .swiper-slide-prev & {
+      display: none;
+    }
+    .swiper-slide-active & {
+      display: block;
+    }
+    .swiper-slide-next & {
+      display: none;
+    }
+  }
+  &.format-upcoming {
+    .swiper-slide-prev & {
+      display: none;
+    }
+    .swiper-slide-active & {
+      display: none;
+    }
+    .swiper-slide-next & {
+      display: block;
+    }
+  }
 }

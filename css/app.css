@@ -1,9 +1,9 @@
 /**
  * Tournament bracket view
  */
-#bracket {
-  position: absolute;
-  width: 100%; }
+body {
+  margin: 0;
+  padding: 0; }
 
 .swiper-container {
   width: 100%;
@@ -13,34 +13,50 @@
   width: 70%; }
 
 .match-container {
+  /* Center the content */
   display: flex;
-  justify-content: center;
   align-items: center;
+  /* Height management for n-2, n-1, n, n+1 and n+2 slides */
+  height: 1.5rem;
+  /* Height transition */
   transition: height 1s;
   -moz-transition: height 1s;
   -webkit-transition: height 1s;
   -o-transition: height 1s; }
-
-.size-small .match.format-mini {
-  display: none; }
-
-.match.format-looser {
-  display: none;
-  -webkit-border-radius: 0.25rem;
-  -moz-border-radius: 0.25rem;
-  border-radius: 0.25rem;
-  border: 1px solid #dadada;
-  background: #e6e6e6;
-  color: #b3b3b3;
-  width: 100%;
-  padding: 0.25rem; }
-  .size-small .match.format-looser {
-    display: flex;
-    align-items: center;
+  .swiper-slide-prev .match-container {
     justify-content: flex-end; }
-  .match.format-looser > * {
-    margin-right: 0.25rem; }
-    .match.format-looser > *:last-child {
-      margin-right: 0; }
+  .swiper-slide-active .match-container {
+    justify-content: center; }
+  .swiper-slide-next .match-container {
+    justify-content: flex-start; }
+  .swiper-slide-prev .match-container {
+    height: 3rem; }
+  .swiper-slide-active .match-container {
+    height: 6rem; }
+  .swiper-slide-next .match-container {
+    height: 12rem; }
+  .swiper-slide-next + .swiper-slide .match-container {
+    height: 24rem; }
+
+.match {
+  background: #E6E6E6; }
+  .swiper-slide-prev .match.format-looser {
+    display: block; }
+  .swiper-slide-active .match.format-looser {
+    display: none; }
+  .swiper-slide-next .match.format-looser {
+    display: none; }
+  .swiper-slide-prev .match.format-versus {
+    display: none; }
+  .swiper-slide-active .match.format-versus {
+    display: block; }
+  .swiper-slide-next .match.format-versus {
+    display: none; }
+  .swiper-slide-prev .match.format-upcoming {
+    display: none; }
+  .swiper-slide-active .match.format-upcoming {
+    display: none; }
+  .swiper-slide-next .match.format-upcoming {
+    display: block; }
 
 /*# sourceMappingURL=app.css.map */
