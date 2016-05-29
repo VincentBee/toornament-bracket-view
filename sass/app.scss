@@ -1,4 +1,6 @@
 @import "variables";
+@import "utils";
+@import "match/all";
 
 /**
  * Tournament bracket view
@@ -46,7 +48,7 @@ body {
 }
 
 .match {
-  background: #E6E6E6;
+  @include match();
 
   &.format-looser {
     .swiper-slide-prev & {
@@ -58,7 +60,10 @@ body {
     .swiper-slide-next & {
       display: none;
     }
+
+    @include match-format-looser();
   }
+
   &.format-versus {
     .swiper-slide-prev & {
       display: none;
@@ -69,7 +74,10 @@ body {
     .swiper-slide-next & {
       display: none;
     }
+
+    @include match-format-versus();
   }
+
   &.format-upcoming {
     .swiper-slide-prev & {
       display: none;
@@ -80,5 +88,38 @@ body {
     .swiper-slide-next & {
       display: block;
     }
+
+    @include match-format-upcoming();
+  }
+}
+
+.bracket-line {
+  .swiper-slide:not(.swiper-slide-active) & {
+    display: none;
+  }
+  .swiper-slide:first-child & {
+    display: none;
+  }
+
+  height:           100%;
+
+  polyline {
+    fill:           none;
+    stroke:         #e6e6e6;
+    stroke-width:   0.5;
+  }
+}
+
+.bracket-line-2 {
+  .swiper-slide:not(.swiper-slide-next) & {
+    display: none;
+  }
+
+  height:           100%;
+
+  polyline {
+    fill:           none;
+    stroke:         #e6e6e6;
+    stroke-width:   0.5;
   }
 }

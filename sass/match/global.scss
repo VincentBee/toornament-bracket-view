@@ -1,0 +1,6 @@
+@mixin match() {
+  border:     1px solid $gray;
+  padding:    0.5rem 1rem;
+  width:      100%;
+  @include border-radius(0.25rem);
+}
