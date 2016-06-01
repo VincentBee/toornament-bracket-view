@@ -1,10 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 'auto',
-        centeredSlides: true
-    });
+    var bracketElement = document.getElementById('bracket');
 
     var tournamentId = getQueryParameterByName('tournamentId');
     var stageNumber  = getQueryParameterByName('stageNumber');
@@ -18,23 +15,63 @@ document.addEventListener('DOMContentLoaded', function () {
         clientSecret: clientSecret
     });
 
-    toornamentApi.callApi('stage_view', {
-        tournamentId: tournamentId,
-        stageNumber: stageNumber
+    toornamentApi.callApi('stage_view', {tournamentId: tournamentId, stageNumber: stageNumber}, function (data) {
+        var bracket = [];
+        for (var i=0; i<data.nodes.length; i++) {
+            var node    = data.nodes[i],
+                nodeId  = node.id.split('.'),
+                roundId = nodeId[2],
+                matchId = nodeId[3];
+
+            if (typeof bracket[roundId] === 'undefined') {
+                bracket[roundId] = [];
+            }
+
+            if (typeof bracket[roundId][matchId] === 'undefined') {
+                bracket[roundId][matchId] = node.match;
+            }
+
+            for (var j=0; j<node.targets.length; j++) {
+                var target = node.targets[j];
+                // console.log('target', target.id);
+            }
+        }
+
+        console.log(data);
+        console.log(bracket);
+
+        var bracketContent = '<div class="swiper-wrapper">';
+        for (var roundId in bracket) {
+            bracketContent += '<div class="swiper-slide round">';
+            for (var matchId in bracket[roundId]) {
+                bracketContent += '<div class="match-container">';
+                bracketContent += '</div>';
+            }
+            bracketContent += '</div>';
+        }
+        bracketContent += '</div>';
+        console.log(bracketElement);
+        console.log(bracketContent);
+        bracketElement.innerHTML = bracketContent;
+
+        var swiper = new Swiper('#bracket', {
+            slidesPerView: 'auto',
+            centeredSlides: true
+        });
+
+        get('views/match.html', function (template) {
+            var matchHTML = Mustache.render(template, {
+                'opponent1_name': 'Participant 1',
+                'opponent2_name': 'Participant 2',
+                'match_name': 'Match of the year'
+            });
+            var matches = document.getElementsByClassName('match-container');
+            for (var j=0; j<matches.length; j++) {
+                matches[j].innerHTML = matchHTML;
+            }
+        });
     });
     toornamentApi.run();
-
-    get('views/match.html', function (template) {
-        var matchHTML = Mustache.render(template, {
-            'opponent1_name': 'Participant 1',
-            'opponent2_name': 'Participant 2',
-            'match_name': 'Match of the year'
-        });
-        var matches = document.getElementsByClassName('match-container');
-        for (var j=0; j<matches.length; j++) {
-            matches[j].innerHTML = matchHTML;
-        }
-    });
 });
 
 function getQueryParameterByName(name) {
