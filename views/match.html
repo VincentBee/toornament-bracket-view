@@ -6,16 +6,16 @@
 <div class="match format-duel format-versus">
     <div class="side">
         <div class="opponent">{{ opponent1_name }}</div>
-        <div class="result">0</div>
+        <div class="result {{ opponent1_result }}">{{ opponent1_score }}</div>
     </div>
     <div class="side">
         <div class="opponent">{{ opponent2_name }}</div>
-        <div class="result">0</div>
+        <div class="result {{ opponent2_result }}">{{ opponent2_score }}</div>
     </div>
 </div>
 
 <div class="match format-duel format-looser">
-    <div class="opponent">{{ opponent1_name }}</div>
+    <div class="opponent">{{ opponent_looser }}</div>
 </div>
 
 <div class="match format-duel format-upcoming">

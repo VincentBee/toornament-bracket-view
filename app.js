@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     var bracketElement = document.getElementById('bracket');
+    var matchTemplate = null;
 
     var tournamentId = getQueryParameterByName('tournamentId');
     var stageNumber  = getQueryParameterByName('stageNumber');
@@ -13,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
         apiKey: apiKey,
         clientId: clientId,
         clientSecret: clientSecret
+    });
+
+    get('views/match.html', function (template) {
+        matchTemplate = template;
     });
 
     toornamentApi.callApi('stage_view', {tournamentId: tournamentId, stageNumber: stageNumber}, function (data) {
@@ -44,31 +49,30 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var roundId in bracket) {
             bracketContent += '<div class="swiper-slide round">';
             for (var matchId in bracket[roundId]) {
+                var opponent1 = bracket[roundId][matchId].opponents[0];
+                var opponent2 = bracket[roundId][matchId].opponents[1];
                 bracketContent += '<div class="match-container">';
+
+                bracketContent += Mustache.render(matchTemplate, {
+                    'opponent1_name': getParticipantName(opponent1),
+                    'opponent2_name': getParticipantName(opponent2),
+                    'opponent1_result': getOpponentResult(opponent1),
+                    'opponent2_result': getOpponentResult(opponent2),
+                    'opponent1_score': getOpponentScore(opponent1),
+                    'opponent2_score': getOpponentScore(opponent2),
+                    'match_name': 'Match of the year'
+                });
+
                 bracketContent += '</div>';
             }
             bracketContent += '</div>';
         }
         bracketContent += '</div>';
-        console.log(bracketElement);
-        console.log(bracketContent);
         bracketElement.innerHTML = bracketContent;
 
         var swiper = new Swiper('#bracket', {
             slidesPerView: 'auto',
             centeredSlides: true
-        });
-
-        get('views/match.html', function (template) {
-            var matchHTML = Mustache.render(template, {
-                'opponent1_name': 'Participant 1',
-                'opponent2_name': 'Participant 2',
-                'match_name': 'Match of the year'
-            });
-            var matches = document.getElementsByClassName('match-container');
-            for (var j=0; j<matches.length; j++) {
-                matches[j].innerHTML = matchHTML;
-            }
         });
     });
     toornamentApi.run();
