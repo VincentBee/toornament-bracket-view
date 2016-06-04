@@ -28,10 +28,10 @@ function Toornament(options) {
  */
 Toornament.prototype.getTargetUrl = function(targetResource, attributes) {
     switch (targetResource) {
-        case 'stage_view':
-            var tournamentId = attributes.tournamentId || null;
-            var stageNumber  = attributes.stageNumber || null;
-            return this.host + '/' + this.version + '/tournaments/'+tournamentId+'/stages/'+stageNumber+'/view';
+        case 'get_stage':
+            return this.host + '/' + this.version + '/tournaments/'+attributes.tournamentId+'/stages/'+attributes.stageNumber;
+        case 'get_stage_view':
+            return this.host + '/' + this.version + '/tournaments/'+attributes.tournamentId+'/stages/'+attributes.stageNumber+'/view';
     }
 
     return null; // todo: throw exception
@@ -39,7 +39,8 @@ Toornament.prototype.getTargetUrl = function(targetResource, attributes) {
 
 Toornament.prototype.getTargetMethod = function(targetResource) {
     switch (targetResource) {
-        case 'stage_view':
+        case 'get_stage':
+        case 'get_stage_view':
             return 'GET';
     }
 
@@ -48,7 +49,8 @@ Toornament.prototype.getTargetMethod = function(targetResource) {
 
 Toornament.prototype.isSecured = function(targetResource) {
     switch (targetResource) {
-        case 'stage_view':
+        case 'get_stage':
+        case 'get_stage_view':
             return true;
     }
 
@@ -62,7 +64,8 @@ Toornament.prototype.getHeaders = function(targetResource) {
     };
 
     switch (targetResource) {
-        case 'stage_view':
+        case 'get_stage':
+        case 'get_stage_view':
             headers.Authorization = 'Bearer ' + this.accessToken;
     }
 
