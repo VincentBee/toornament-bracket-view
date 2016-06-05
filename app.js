@@ -50,9 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     bracketContent += '<div class="match-container"></div>';
                     continue;
                 }
-                
-                var opponent1 = node.match.opponents[0];
-                var opponent2 = node.match.opponents[1];
+
+                var match     = node.match,
+                    opponent1 = match.opponents[0],
+                    opponent2 = match.opponents[1];
+
                 bracketContent += '<div class="match-container">';
 
                 bracketContent += Mustache.render(matchTemplate, {
@@ -62,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     'opponent2_result': getOpponentResult(opponent2),
                     'opponent1_score': getOpponentScore(opponent1),
                     'opponent2_score': getOpponentScore(opponent2),
-                    'opponent_looser': getMatchLooserName(node.match),
-                    'match_name': 'Next match',
+                    'opponent_looser': getMatchLooserName(match),
+                    'match_name': getMatchName(match, stage.size),
                     'connector_top': node.sources[0].type==='winner',
                     'connector_bot': node.sources[1].type==='winner'
                 });

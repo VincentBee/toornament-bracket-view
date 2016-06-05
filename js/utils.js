@@ -31,6 +31,25 @@ function get(url, callback) {
 }
 
 /**
+ * @param match
+ *
+ * @returns {*}
+ */
+function getMatchName(match, stageSize)
+{
+    var round = match.round_number,
+        lastRound = getBinaryTreeMaxDepth(stageSize),
+        level = Math.pow(2, lastRound-round);
+
+    switch (lastRound-round) {
+        case 0:
+            return 'Final';
+        default:
+            return '1/'+ level +' finals';
+    }
+}
+
+/**
  * @param opponent
  *
  * @returns String
