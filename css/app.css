@@ -14,8 +14,9 @@ body {
   width: 70%; }
 
 .match-container {
+  /* Display only 3 slides */
+  display: none;
   /* Center the content */
-  display: flex;
   align-items: center;
   /* Height management for n-2, n-1, n, n+1 and n+2 slides */
   height: 1.5rem;
@@ -24,6 +25,8 @@ body {
   -moz-transition: height 1s;
   -webkit-transition: height 1s;
   -o-transition: height 1s; }
+  .swiper-slide-prev .match-container, .swiper-slide-active .match-container, .swiper-slide-next .match-container {
+    display: flex; }
   .swiper-slide-prev .match-container {
     justify-content: flex-end; }
   .swiper-slide-active .match-container {

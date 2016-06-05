@@ -21,8 +21,11 @@ body {
 }
 
 .match-container {
+  /* Display only 3 slides */
+  display: none;
+  .swiper-slide-prev &, .swiper-slide-active &, .swiper-slide-next & { display: flex; }
+
   /* Center the content */
-  display: flex;
   align-items: center;
   .swiper-slide-prev & {
     justify-content: flex-end;
