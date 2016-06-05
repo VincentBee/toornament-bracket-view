@@ -4,7 +4,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #263238; }
+  background: #f7f7f7; }
 
 .swiper-container {
   width: 100%;
@@ -40,16 +40,19 @@ body {
     height: 24rem; }
 
 .match {
-  background: #607D8B;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
   padding: 0.5rem 1rem;
   width: 100%;
-  color: #ECEFF1;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  color: #000000;
   font-family: "Arial"; }
   .match:hover, .match:active, .match:focus {
-    background: #78909C; }
+    background: #f2f2f2; }
   .match.format-looser {
-    background: #455A64;
-    color: #78909C;
+    color: #d9d9d9;
     text-align: right; }
     .swiper-slide-prev .match.format-looser {
       display: block; }
@@ -67,8 +70,14 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 0.25rem; }
-    .match.format-versus .side .opponent {
-      font-weight: bold; }
+    .match.format-versus .side .opponent.tbd {
+      color: #d9d9d9; }
+    .match.format-versus .side .result.win {
+      color: #50b649; }
+    .match.format-versus .side .result.draw {
+      color: #808080; }
+    .match.format-versus .side .result.loss {
+      color: #e61a1a; }
   .swiper-slide-prev .match.format-upcoming {
     display: none; }
   .swiper-slide-active .match.format-upcoming {
@@ -87,7 +96,7 @@ body {
       stroke-width: 0.5; }
   .bracket-line polyline {
     fill: none;
-    stroke: #607D8B;
+    stroke: #e6e6e6;
     stroke-width: 0.25; }
 
 /*# sourceMappingURL=app.css.map */

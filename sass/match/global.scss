@@ -1,12 +1,13 @@
 @mixin match() {
-  background: $color-main;
+  background: $color-match-background;
+  border: 1px solid $color-strokes;
   &:hover, &:active, &:focus {
     background: $color-focus;
   }
 
   padding:    0.5rem 1rem;
   width:      100%;
-  //@include border-radius(0.25rem);
+  @include border-radius(0.25rem);
   color:      $color-content;
 
   font-family: "Arial";

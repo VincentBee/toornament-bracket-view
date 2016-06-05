@@ -8,7 +8,7 @@
 body {
   margin:     0;
   padding:    0;
-  background: $color-back;
+  background: $color-background;
 }
 
 .swiper-container {
@@ -112,7 +112,7 @@ body {
 
   polyline {
     fill:           none;
-    stroke:         $color-main;
+    stroke:         $color-strokes;
     stroke-width:   0.25;
   }
 }

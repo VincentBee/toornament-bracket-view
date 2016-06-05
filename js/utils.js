@@ -44,7 +44,7 @@ function getParticipantName(opponent)
         return 'Participant #'+ opponent.participant.number;
     }
 
-    return '-';
+    return null;
 }
 
 /**
@@ -67,7 +67,7 @@ function getOpponentResult(opponent)
 /**
  * @param opponent
  *
- * @returns String
+ * @returns {*}
  */
 function getOpponentScore(opponent)
 {
@@ -83,6 +83,30 @@ function getOpponentScore(opponent)
         case 3:
             return 'L';
     }
+}
+
+/**
+ * Return the looser opponent object of the match.
+ *
+ * @param match
+ *
+ * @returns {*}
+ */
+function getMatchLooserName(match)
+{
+    for (var i=0; i<2; i++) {
+        var opponent = match.opponents[i];
+
+        if (typeof opponent === 'undefined' || opponent === null) {
+            continue;
+        }
+
+        if (opponent.result === 3) {
+            return opponent.participant.name;
+        }
+    }
+
+    return null;
 }
 
 /**
@@ -105,7 +129,6 @@ function walkBracket(nodes, size, bracket, source, depth)
     bracket = (typeof bracket !== 'undefined')? bracket : [];
     source  = (typeof source !== 'undefined')? source : 'root';
     depth   = (typeof depth !== 'undefined')? depth : getBinaryTreeMaxDepth(size);
-    console.log(depth);
 
     if (depth <= 0) {
         return bracket;

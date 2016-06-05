@@ -45,12 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var roundId in bracket) {
             bracketContent += '<div class="swiper-slide round">';
             for (var matchId in bracket[roundId]) {
-                if (bracket[roundId][matchId] === null) {
+                var node = bracket[roundId][matchId];
+                if (node === null) {
                     bracketContent += '<div class="match-container"></div>';
                     continue;
                 }
-                var opponent1 = bracket[roundId][matchId].match.opponents[0];
-                var opponent2 = bracket[roundId][matchId].match.opponents[1];
+                
+                var opponent1 = node.match.opponents[0];
+                var opponent2 = node.match.opponents[1];
                 bracketContent += '<div class="match-container">';
 
                 bracketContent += Mustache.render(matchTemplate, {
@@ -60,9 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     'opponent2_result': getOpponentResult(opponent2),
                     'opponent1_score': getOpponentScore(opponent1),
                     'opponent2_score': getOpponentScore(opponent2),
+                    'opponent_looser': getMatchLooserName(node.match),
                     'match_name': 'Next match',
-                    'connector_top': bracket[roundId][matchId].sources[0].type==='winner',
-                    'connector_bot': bracket[roundId][matchId].sources[1].type==='winner'
+                    'connector_top': node.sources[0].type==='winner',
+                    'connector_bot': node.sources[1].type==='winner'
                 });
 
                 bracketContent += '</div>';

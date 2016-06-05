@@ -5,8 +5,18 @@
 
     padding: 0.25rem;
 
-    .opponent {
-      font-weight: bold;
+    .opponent.tbd {
+      color: $color-disabled;
+    }
+
+    .result.win {
+      color: $color-win;
+    }
+    .result.draw {
+      color: $color-draw;
+    }
+    .result.loss {
+      color: $color-loss;
     }
   }
 }
