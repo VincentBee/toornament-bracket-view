@@ -5,7 +5,13 @@
 /**
  * Tournament bracket view
  */
+html {
+  overflow:   hidden;
+  height:     100%;
+}
 body {
+  height:     100%;
+  overflow:   auto;
   margin:     0;
   padding:    0;
   background: $color-background;
@@ -45,10 +51,10 @@ body {
   .swiper-slide-next + .swiper-slide & {  height: $match-container-height*4; }
 
   /* Height transition */
-  transition: height 1s;
-  -moz-transition: height 1s;
-  -webkit-transition: height 1s;
-  -o-transition: height 1s;
+  //transition: height 1s;
+  //-moz-transition: height 1s;
+  //-webkit-transition: height 1s;
+  //-o-transition: height 1s;
 }
 
 .match {

@@ -18,23 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         clientSecret: clientSecret
     });
 
-    get('views/match.html', function (template) {
-        matchTemplate = template;
-        attemptToBuildBracket();
-    });
-
-    toornamentApi.callApi('get_stage', {tournamentId: tournamentId, stageNumber: stageNumber}, function (data) {
-        console.log('get_stage:', data);
-        stage = data;
-        attemptToBuildBracket();
-    });
-    toornamentApi.callApi('get_stage_view', {tournamentId: tournamentId, stageNumber: stageNumber}, function (data) {
-        console.log('get_stage_view:', data);
-        stageView = data;
-        attemptToBuildBracket();
-    });
-    toornamentApi.run();
-
     var attemptToBuildBracket = function() {
         if (matchTemplate === null || stage === null || stageView === null) {
             return;
@@ -77,9 +60,56 @@ document.addEventListener('DOMContentLoaded', function () {
         bracketContent += '</div>';
         bracketElement.innerHTML = bracketContent;
 
+        var screenHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
         var swiper = new Swiper('#bracket', {
             slidesPerView: 'auto',
-            centeredSlides: true
+            centeredSlides: true,
+            onTouchEnd: function (swiper, event) {
+                var ratioBracket = 0, ratioScreen = 0;
+
+                console.log(event);
+
+                if (event instanceof MouseEvent) {
+                    ratioBracket = event.layerY / bracketElement.offsetHeight,
+                    ratioScreen = event.clientY / screenHeight;
+                } else if (event instanceof TouchEvent) {
+                    ratioBracket = event.changedTouches[0].layerY / bracketElement.offsetHeight,
+                    ratioScreen = event.changedTouches[0].clientY / screenHeight;
+                }
+                console.log(ratioBracket, ratioScreen);
+            },
         });
-    }
+    };
+
+    var showError = function (code, data) {
+        switch (code) {
+            case 401:
+                alert('Authentication failed');
+                break;
+            case 403:
+                alert('You don\'t have access to this tournament');
+                break;
+            case 404:
+                alert('Tournament or Stage not found');
+                break;
+        }
+    };
+
+    get('views/match.html', function (template) {
+        matchTemplate = template;
+        attemptToBuildBracket();
+    });
+
+    toornamentApi.callApi('get_stage', {tournamentId: tournamentId, stageNumber: stageNumber}, function (data) {
+        console.log('get_stage:', data);
+        stage = data;
+        attemptToBuildBracket();
+    }, showError);
+    toornamentApi.callApi('get_stage_view', {tournamentId: tournamentId, stageNumber: stageNumber}, function (data) {
+        console.log('get_stage_view:', data);
+        stageView = data;
+        attemptToBuildBracket();
+    }, showError);
+
+    toornamentApi.run();
 });
