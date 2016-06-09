@@ -60,23 +60,22 @@ document.addEventListener('DOMContentLoaded', function () {
         bracketContent += '</div>';
         bracketElement.innerHTML = bracketContent;
 
-        var screenHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+        var screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
         var swiper = new Swiper('#bracket', {
             slidesPerView: 'auto',
             centeredSlides: true,
             onTouchEnd: function (swiper, event) {
-                var ratioBracket = 0, ratioScreen = 0;
-
-                console.log(event);
+                var matchContainerTargeted = getParent(event.srcElement, 'match-container'),
+                    ratioBracket = getPosition(matchContainerTargeted).top / bracketElement.offsetHeight,
+                    ratioScreen  = 0;
 
                 if (event instanceof MouseEvent) {
-                    ratioBracket = event.layerY / bracketElement.offsetHeight,
                     ratioScreen = event.clientY / screenHeight;
                 } else if (event instanceof TouchEvent) {
-                    ratioBracket = event.changedTouches[0].layerY / bracketElement.offsetHeight,
                     ratioScreen = event.changedTouches[0].clientY / screenHeight;
                 }
-                console.log(ratioBracket, ratioScreen);
+                
+                console.log(matchContainerTargeted, ratioBracket, ratioScreen);
             },
         });
     };

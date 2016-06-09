@@ -182,3 +182,47 @@ function walkBracket(nodes, size, bracket, source, depth)
 
     return bracket;
 }
+
+/**
+ * @param element
+ * @param cls
+ * 
+ * @returns {boolean}
+ */
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+/**
+ * @param element
+ * @param cls
+ *
+ * @returns {*}
+ */
+function getParent(element, cls) {
+    if (hasClass(element, cls)) {
+        return element;
+    }
+    if (element.tagName == "BODY") {
+        return false;
+    }
+
+    return getParent(element.parentNode, cls);
+}
+
+/**
+ * @param element
+ *
+ * @returns {{top: number, left: number}}
+ */
+function getPosition(element) {
+    var top=0, left=0;
+
+    while(element) {
+        top += parseInt(element.offsetTop);
+        left += parseInt(element.offsetLeft);
+        element = element.offsetParent
+    }
+
+    return {top: top, left: left}
+}
