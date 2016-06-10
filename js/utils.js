@@ -143,6 +143,15 @@ function getBinaryTreeMaxDepth(size)
     return depth;
 }
 
+/**
+ * @param nodes   The list of node to walk
+ * @param size    The size of the bracket
+ * @param bracket The bracket result
+ * @param source  The current node (for iteration)
+ * @param depth   The depth level (for iteration)
+ *
+ * @returns {Array|*}
+ */
 function walkBracket(nodes, size, bracket, source, depth)
 {
     bracket = (typeof bracket !== 'undefined')? bracket : [];

@@ -13,3 +13,4 @@ TODO:
 - avoid unhandled structures
 - bracket groups
 - double elimination bracket
+- Hash Navigation to open a specific slide on load
