@@ -162,12 +162,15 @@ function walkBracket(nodes, size, bracket, source, depth)
         return bracket;
     }
 
-    if (typeof bracket[depth] === 'undefined') {
-        bracket[depth] = [];
+    if (typeof bracket[depth-1] === 'undefined') {
+        bracket[depth-1] = {
+            roundId: depth,
+            matches: []
+        };
     }
 
     if (source === 'empty') {
-        bracket[depth].push(null);
+        bracket[depth-1].matches.push({});
         bracket = walkBracket(nodes, size, bracket, 'empty', depth-1);
         bracket = walkBracket(nodes, size, bracket, 'empty', depth-1);
     }
@@ -176,7 +179,7 @@ function walkBracket(nodes, size, bracket, source, depth)
         var node = nodes[i];
 
         if ((source == 'root' && node.is_root) || source === node.id) {
-            bracket[depth].push(node);
+            bracket[depth-1].matches.push(node);
 
             for (var j=0; j<2; j++) {
                 if (node.sources[j].type === 'winner') {

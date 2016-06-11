@@ -1,10 +1,12 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var bracketElement = document.getElementById('bracket'),
-        matchTemplate  = null,
-        stageView      = null,
-        stage          = null;
+    var bracketElement  = document.getElementById('bracket'),
+        matchTemplate   = null,
+        roundTemplate   = null,
+        bracketTemplate = null,
+        stageView       = null,
+        stage           = null;
 
     var tournamentId = getQueryParameterByName('tournamentId'),
         stageNumber  = getQueryParameterByName('stageNumber'),
@@ -18,66 +20,70 @@ document.addEventListener('DOMContentLoaded', function () {
         clientSecret: clientSecret
     });
 
+
     var attemptToBuildBracket = function() {
-        if (matchTemplate === null || stage === null || stageView === null) {
+        if (matchTemplate === null || roundTemplate === null || bracketTemplate === null || stage === null || stageView === null) {
             return;
         }
-        var bracket = walkBracket(stageView.nodes, stage.size);
 
-        var bracketContent = '<div class="swiper-wrapper">';
-        for (var roundId in bracket) {
-            bracketContent += '<div class="swiper-slide round">';
-            for (var matchId in bracket[roundId]) {
-                var node = bracket[roundId][matchId];
-                if (node === null) {
-                    bracketContent += '<div class="match-container"></div>';
-                    continue;
-                }
+        bracketElement.innerHTML = Mustache.render(bracketTemplate, {
+            'rounds': walkBracket(stageView.nodes, stage.size),
+            'round_content': function () {
+                return Mustache.render(roundTemplate, {
+                    'round_id': this.roundId,
+                    'matches': this.matches,
+                    'match_content': function () {
+                        if (!this.hasOwnProperty('match')) {
+                            return;
+                        }
 
-                var match     = node.match,
-                    opponent1 = match.opponents[0],
-                    opponent2 = match.opponents[1];
+                        var opponent1 = this.match.opponents[0],
+                            opponent2 = this.match.opponents[1];
 
-                bracketContent += '<div class="match-container">';
-
-                bracketContent += Mustache.render(matchTemplate, {
-                    'opponent1_name': getParticipantName(opponent1),
-                    'opponent2_name': getParticipantName(opponent2),
-                    'opponent1_result': getOpponentResult(opponent1),
-                    'opponent2_result': getOpponentResult(opponent2),
-                    'opponent1_score': getOpponentScore(opponent1),
-                    'opponent2_score': getOpponentScore(opponent2),
-                    'opponent_looser': getMatchLooserName(match),
-                    'match_name': getMatchName(match, stage.size),
-                    'connector_top': node.sources[0].type==='winner',
-                    'connector_bot': node.sources[1].type==='winner'
+                        return Mustache.render(matchTemplate, {
+                            'opponent1_name': getParticipantName(opponent1),
+                            'opponent2_name': getParticipantName(opponent2),
+                            'opponent1_result': getOpponentResult(opponent1),
+                            'opponent2_result': getOpponentResult(opponent2),
+                            'opponent1_score': getOpponentScore(opponent1),
+                            'opponent2_score': getOpponentScore(opponent2),
+                            'opponent_looser': getMatchLooserName(this.match),
+                            'match_name': getMatchName(this.match, stage.size),
+                            // 'connector_top': node.sources[0].type==='winner',
+                            // 'connector_bot': node.sources[1].type==='winner'
+                        });
+                    }
                 });
-
-                bracketContent += '</div>';
             }
-            bracketContent += '</div>';
-        }
-        bracketContent += '</div>';
-        bracketElement.innerHTML = bracketContent;
-
-        var screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-        var swiper = new Swiper('#bracket', {
-            slidesPerView: 'auto',
-            centeredSlides: true,
-            onTouchEnd: function (swiper, event) {
-                var matchContainerTargeted = getParent(event.srcElement, 'match-container'),
-                    ratioBracket = getPosition(matchContainerTargeted).top / bracketElement.offsetHeight,
-                    ratioScreen  = 0;
-
-                if (event instanceof MouseEvent) {
-                    ratioScreen = event.clientY / screenHeight;
-                } else if (event instanceof TouchEvent) {
-                    ratioScreen = event.changedTouches[0].clientY / screenHeight;
-                }
-                
-                console.log(matchContainerTargeted, ratioBracket, ratioScreen);
-            },
         });
+
+        var bracketSwiper = new Swiper('#bracket', {
+            wrapperClass: 'bracket-wrapper',
+            slideClass: 'bracket-slide',
+            slidePrevClass: 'bracket-prev',
+            slideActiveClass: 'bracket-active',
+            slideNextClass: 'bracket-next',
+            slidesPerView: 'auto',
+            onSlideChangeEnd: function (swiper) {
+                for (var i in roundSwipers) {
+                    roundSwipers[i].update();
+                }
+            }
+        });
+        var roundSwipers = new Swiper('.round', {
+            direction: 'vertical',
+            wrapperClass: 'round-wrapper',
+            slideClass: 'round-slide',
+            slidePrevClass: 'round-prev',
+            slideActiveClass: 'round-active',
+            slideNextClass: 'round-next',
+            slidesPerView: 'auto'
+        });
+        console.log(roundSwipers);
+
+        roundSwipers[0].params.control = roundSwipers[1];
+        roundSwipers[1].params.touchRatio = 0.2;
+        roundSwipers[1].params.control = roundSwipers[0];
     };
 
     var showError = function (code, data) {
@@ -96,6 +102,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     get('views/match.html', function (template) {
         matchTemplate = template;
+        attemptToBuildBracket();
+    });
+    get('views/round.html', function (template) {
+        roundTemplate = template;
+        attemptToBuildBracket();
+    });
+    get('views/bracket.html', function (template) {
+        bracketTemplate = template;
         attemptToBuildBracket();
     });
 
