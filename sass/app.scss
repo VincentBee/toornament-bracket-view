@@ -38,11 +38,6 @@ body {
   .bracket-active & {                 height: $match-container-height;   }
   .bracket-next & {                   height: $match-container-height*2; }
   .bracket-next + .bracket-slide & {  height: $match-container-height*4; }
-  /* Height transition */
-  //transition: height 1s;
-  //-moz-transition: height 1s;
-  //-webkit-transition: height 1s;
-  //-o-transition: height 1s;
 }
 
 .match-container {

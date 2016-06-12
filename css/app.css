@@ -25,8 +25,7 @@ body {
 
 .round-slide {
   /* Height management for n-2, n-1, n, n+1 and n+2 slides */
-  height: 1.5rem;
-  /* Height transition */ }
+  height: 1.5rem; }
   .bracket-prev .round-slide {
     height: 3rem; }
   .bracket-active .round-slide {

@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        var rounds = walkBracket(stageView.nodes, stage.size);
+
         bracketElement.innerHTML = Mustache.render(bracketTemplate, {
-            'rounds': walkBracket(stageView.nodes, stage.size),
+            'rounds': rounds,
             'round_content': function () {
                 return Mustache.render(roundTemplate, {
                     'round_id': this.roundId,
@@ -63,27 +65,46 @@ document.addEventListener('DOMContentLoaded', function () {
             slidePrevClass: 'bracket-prev',
             slideActiveClass: 'bracket-active',
             slideNextClass: 'bracket-next',
-            slidesPerView: 'auto',
-            onSlideChangeEnd: function (swiper) {
-                for (var i in roundSwipers) {
-                    roundSwipers[i].update();
-                }
-            }
-        });
-        var roundSwipers = new Swiper('.round', {
-            direction: 'vertical',
-            wrapperClass: 'round-wrapper',
-            slideClass: 'round-slide',
-            slidePrevClass: 'round-prev',
-            slideActiveClass: 'round-active',
-            slideNextClass: 'round-next',
             slidesPerView: 'auto'
         });
-        console.log(roundSwipers);
 
-        roundSwipers[0].params.control = roundSwipers[1];
-        roundSwipers[1].params.touchRatio = 0.2;
-        roundSwipers[1].params.control = roundSwipers[0];
+        var roundSwipers = [];
+        rounds.forEach(function (round, index, rounds) {
+            roundSwipers[index] = new Swiper('#round-'+round.roundId, {
+                direction: 'vertical',
+                wrapperClass: 'round-wrapper',
+                slideClass: 'round-slide',
+                slidePrevClass: 'round-prev',
+                slideActiveClass: 'round-active',
+                slideNextClass: 'round-next',
+                slidesPerView: 'auto',
+                controlBy: 'container',
+                observer: true,
+                observeParents: true
+            });
+        });
+        roundSwipers.forEach(function(swiper, index, swipers) {
+            var controlledSwipers = [];
+            if (index>0) {
+                controlledSwipers.push(swipers[index-1]);
+            }
+            if (index<swipers.length-1) {
+                controlledSwipers.push(swipers[index+1]);
+            }
+            // for (var i=0; i<swipers.length; i++) {
+            //     if (i === index) {
+            //         continue;
+            //     }
+            //     controlledSwipers.push(swipers[i]);
+            // }
+            swiper.params.control = controlledSwipers;
+            console.log(controlledSwipers);
+        });
+
+        // roundSwipers[0].params.control = roundSwipers[1];
+        // roundSwipers[1].params.control = [roundSwipers[0], roundSwipers[2]];
+        //
+        // roundSwipers[2].params.control = ;
     };
 
     var showError = function (code, data) {
